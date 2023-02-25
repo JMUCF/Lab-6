@@ -1,8 +1,23 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int search(int numbers[], int low, int high, int value) 
+
+int search(int numbers[], int low, int high, int value)
 {
-	return -1;
+  
+  if (low > high) //return -1 if value not found
+    return -1;
+  
+  int mid = low + (high - low) / 2; // get the index of the midpoint
+
+  if(value == numbers[mid]) //return index if it is value
+    return mid;
+    
+  if(value < numbers[mid]) //call function again for lower half
+    return(search(numbers, low, mid-1, value));
+
+  if(value > numbers[mid]) //call function again for upper half
+    return(search(numbers, mid+1, high, value));
 }
 
 void printArray(int numbers[], int sz)
@@ -28,7 +43,8 @@ int main(void)
 	FILE* inFile = fopen("input.txt","r");
 
 	fscanf(inFile, " %d\n", &numInputs);
-	
+
+  
 	while (numInputs-- > 0)
 	{
 		fscanf(inFile, " %d\n", &countOfNums);
